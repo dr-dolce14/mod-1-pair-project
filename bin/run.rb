@@ -1,9 +1,12 @@
 require_relative '../config/environment'
 
-cli = CommandLineInterface.new
-cli.greet
-cli.new_birdwatcher
-cli.get_bird
-cli.new_sighting
+cli = CommandLineInterface.new()
+logged_in_birdwatcher = cli.greeting()
+cli.birdwatcher = logged_in_birdwatcher
+cli.main_menu
+
+
+
+
 
 #puts "hello world"
