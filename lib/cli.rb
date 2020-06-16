@@ -24,6 +24,7 @@ class CommandLineInterface
         prompt.select("What would you like to do?") do |menu|
         #   menu.choice "Look For Birds", -> { self.look_for_birds }
           menu.choice "Report a sighting", -> { self.report_sighting }
+          menu.choice "See my sightings", -> { self.see_my_sightings }
           menu.choice "See my birds", -> { self.see_my_birds }
           menu.choice "Update name", -> { self.update_name }
           menu.choice "Delete a sighting", -> { self.delete_sighting }
@@ -51,6 +52,7 @@ class CommandLineInterface
         birdwatcher_weather = gets.chomp
         new_bird = Bird.create(common_name: "#{common_name}", color: "#{color}", size: "#{size}", food: "#{food}")
         new_sighting = Sighting.create(birdwatcher_id: self.birdwatcher.id, bird_id: new_bird.id, time_of_day: Time.current, weather: birdwatcher_weather, location: birdwatcher_location)
+        self.main_menu
     end
 
     def see_my_birds
@@ -67,17 +69,36 @@ class CommandLineInterface
                     bird_name_array << bird.common_name
                 end
             end
+        puts bird_name_array
+            end
+        puts "\n"
+        puts " ============================== "
+        prompt.select ("Would you like to go back to the main menu?") do |menu|
+            menu.choice "Main Menu", -> { self.main_menu }
+
         end
-        bird_name_array
-        binding.pry
+        # binding.pry
     end
+
+
     
     def see_my_sightings
         birdwatcher_sightings = Sighting.all.select do |sighting|
             sighting.birdwatcher_id == self.birdwatcher.id
         end
-        birdwatcher_sightings
+        if birdwatcher_sightings == []
+            puts "You haven't reported any sightings yet!"
+            sleep 2
+            self.main_menu
+        else
+        print birdwatcher_sightings
     end
+    puts "\n"
+    puts " ============================== "
+    prompt.select ("Would you like to go back to the main menu?") do |menu|
+        menu.choice "Main Menu", -> { self.main_menu }
+    end
+end
 
     def update_name
         puts "New identity? Put it here!"
@@ -93,11 +114,12 @@ class CommandLineInterface
         sighting_to_destroy = gets.chomp.to_i
         byebye = Sighting.find(sighting_to_destroy)
         byebye.destroy
+        self.main_menu
     end
 
     def goodbye
-        puts "Toucan't touch this"
-        puts "No egrets"
+        puts "Owl good things must come to an end."
+        puts "No egrets."
     end
 
 end
