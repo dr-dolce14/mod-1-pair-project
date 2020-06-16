@@ -1,0 +1,17 @@
+birdwatcher1 = Birdwatcher.create(name: Faker::Name.name)
+birdwatcher2 = Birdwatcher.create(name: Faker::Name.name)
+birdwatcher3 = Birdwatcher.create(name: Faker::Name.name)
+birdwatcher4 = Birdwatcher.create(name: Faker::Name.name)
+birdwatcher5 = Birdwatcher.create(name: Faker::Name.name)
+
+bird1 = Bird.create(common_name: "Robin", color: "brown", size: "medium", food: "worms")
+bird2 = Bird.create(common_name: "Cardinal", color: "red", size: "small", food: "seeds")
+bird3 = Bird.create(common_name: "Eagle", color: "white", size: "very big", food: "flesh")
+bird4 = Bird.create(common_name: "Blue Jay", color: "blue", size: "big", food: "worms")
+bird5 = Bird.create(common_name: "Bluebird", color: "blue", size: "medium", food: "seeds")
+
+sighting1 = Sighting.create(birdwatcher_id: birdwatcher2.id, bird_id: bird3.id, time_of_day: Time.current, weather: "cloudy", location: "front yard")
+sighting2 = Sighting.create(birdwatcher_id: birdwatcher1.id, bird_id: bird2.id, time_of_day: Time.current, weather: "clear", location: "back yard")
+sighting3 = Sighting.create(birdwatcher_id: birdwatcher3.id, bird_id: bird1.id, time_of_day: Time.current, weather: "humid", location: "neighbor yard")
+sighting4 = Sighting.create(birdwatcher_id: birdwatcher5.id, bird_id: bird4.id, time_of_day: Time.current, weather: "humid", location: "back yard")
+sighting5 = Sighting.create(birdwatcher_id: birdwatcher4.id, bird_id: bird5.id, time_of_day: Time.current, weather: "humid", location: "neighbor yard")
