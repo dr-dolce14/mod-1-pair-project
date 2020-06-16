@@ -1,10 +1,9 @@
 require_relative '../config/environment'
 
-def greet
-    puts "TALK BIRDY TO ME!"
-    puts "Welcome to the Backyard Birders Log!"
-end
+cli = CommandLineInterface.new
+cli.greet
+cli.new_birdwatcher
+cli.get_bird
+cli.new_sighting
 
-greet
-
-# puts "hello world"
+#puts "hello world"
