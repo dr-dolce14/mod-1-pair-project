@@ -1,3 +1,5 @@
+require 'pry'
+
 class CommandLineInterface
 
     attr_accessor :birdwatcher, :prompt, :sighting, :bird
@@ -22,9 +24,9 @@ class CommandLineInterface
         prompt.select("What would you like to do?") do |menu|
         #   menu.choice "Look For Birds", -> { self.look_for_birds }
           menu.choice "Report a sighting", -> { self.report_sighting }
-          menu.choice "See my sightings", -> { self.see_my_sightings }
           menu.choice "See my birds", -> { self.see_my_birds }
           menu.choice "Update name", -> { self.update_name }
+          menu.choice "Delete a sighting", -> { self.delete_sighting }
     
           menu.choice "Exit", -> { self.goodbye }
         end
@@ -51,44 +53,55 @@ class CommandLineInterface
         new_sighting = Sighting.create(birdwatcher_id: self.birdwatcher.id, bird_id: new_bird.id, time_of_day: Time.current, weather: birdwatcher_weather, location: birdwatcher_location)
     end
 
-    def see_my_sightings
-        self.sighting.reload
+    def see_my_birds
         birdwatcher_sightings = Sighting.all.select do |sighting|
-            sighting.birdwatcher == self
+            sighting.birdwatcher_id == self.birdwatcher.id
+        end
+        bird_array = birdwatcher_sightings.collect do |sighting|
+            sighting.bird_id
+        end
+        bird_name_array = []
+        Bird.all.select do |bird|
+            bird_array.each do |bird_id|
+                if bird.id == bird_id
+                    bird_name_array << bird.common_name
+                end
+            end
+        end
+        bird_name_array
+        binding.pry
+    end
+    
+    def see_my_sightings
+        birdwatcher_sightings = Sighting.all.select do |sighting|
+            sighting.birdwatcher_id == self.birdwatcher.id
         end
         birdwatcher_sightings
     end
 
-    def see_my_birds
-        puts self.birdwatcher.birds 
+    def update_name
+        puts "New identity? Put it here!"
+        birdwatcher_nam = gets.chomp
+        self.birdwatcher.update(name: birdwatcher_nam)
+        self.main_menu
     end
 
-    
+    def delete_sighting
+        puts "What do you want to delete?"
+        p see_my_sightings
+        puts "Pick a sighting ID to delete"
+        sighting_to_destroy = gets.chomp.to_i
+        byebye = Sighting.find(sighting_to_destroy)
+        byebye.destroy
+    end
 
-    # def new_birdwatcher
-    #     puts "Do you already have a bird log? (Y/n)"
-    #     user_answer = gets.chomp
-    #     if user_answer == "Y"
-    #         puts "Enter your name:"
-    #         user_input = gets.chomp
-    #         Birdwatcher.find_by(name: "#{user_input}")
-    #     else
-    #         puts "Have a birdtastic day!"
-    #     end
-    # end
-
-    # def get_bird
-    #   
-    # end
-
-    # def new_sighting
-    #     Sighting.create(
-    #         birdwatcher_id: new_birdwatcher.user_input.id, 
-    #         bird_id: get_bird.new_bird.id,
-    #         time_of_day: Time.current,
-    #         weather: "#{get_bird.user_weather}",
-    #         location: "#{get_bird.user_location}"
-    #     )
-    # end
+    def goodbye
+        puts "Toucan't touch this"
+        puts "No egrets"
+    end
 
 end
+
+
+
+  
