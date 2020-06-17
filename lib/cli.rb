@@ -83,11 +83,6 @@ class CommandLineInterface
             sleep 2
             self.main_menu
         else
-<<<<<<< HEAD
-            p birdwatcher_sightings
-        end
-    end
-=======
         puts "\n"
         puts " ============================== "
         prompt.select ("Back to the main menu") do |menu|
@@ -96,7 +91,6 @@ class CommandLineInterface
     end
       
 end
->>>>>>> 0f63cda455bbffd8986a179ea6d4181e34ffa786
 
     def update_name
         puts "New identity? Put it here!"
