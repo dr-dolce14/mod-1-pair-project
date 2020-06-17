@@ -69,8 +69,8 @@ class CommandLineInterface
                     bird_name_array << bird.common_name
                 end
             end
+        end
         puts bird_name_array
-            end
         puts "\n"
         puts " ============================== "
         prompt.select ("Would you like to go back to the main menu?") do |menu|
