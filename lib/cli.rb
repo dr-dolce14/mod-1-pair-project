@@ -56,26 +56,14 @@ class CommandLineInterface
     end
 
     def see_my_birds
-        birdwatcher_sightings = Sighting.all.select do |sighting|
-            sighting.birdwatcher_id == self.birdwatcher.id
-        end
-        bird_array = birdwatcher_sightings.collect do |sighting|
-            sighting.bird_id
-        end
-        bird_name_array = []
-        Bird.all.select do |bird|
-            bird_array.each do |bird_id|
-                if bird.id == bird_id
-                    bird_name_array << bird.common_name
-                end
-            end
+        bird_name_array = self.birdwatcher.birds.collect do |bird|
+            bird.common_name
         end
         puts bird_name_array
         puts "\n"
         puts " ============================== "
         prompt.select ("Back to the main menu") do |menu|
             menu.choice "Main Menu", -> { self.main_menu }
-
         end
         # binding.pry
     end
@@ -83,15 +71,15 @@ class CommandLineInterface
 
     
     def see_my_sightings
-        birdwatcher_sightings = Sighting.all.select do |sighting|
-            sighting.birdwatcher_id == self.birdwatcher.id
+        birdwatcher_sightings = self.birdwatcher.sightings.each do |sighting|
+            puts sighting.nice_description
         end
         if birdwatcher_sightings == []
             puts "You haven't reported any sightings yet!"
             sleep 2
             self.main_menu
         else
-        print birdwatcher_sightings
+        p birdwatcher_sightings
     end
    
 end
@@ -106,7 +94,7 @@ end
     def delete_sighting
         puts "What do you want to delete?"
         p see_my_sightings
-        puts "Pick a sighting ID to delete"
+        puts "Pick a sighting's number to delete"
         sighting_to_destroy = gets.chomp.to_i
         byebye = Sighting.find(sighting_to_destroy)
         byebye.destroy
