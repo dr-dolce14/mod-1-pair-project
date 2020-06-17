@@ -7,6 +7,10 @@ class Sighting < ActiveRecord::Base
     end
 
     # def delete_sighting_but_nice
-    #     return ""
+    #     return "Pick the sighting number that you would like to delete"
+    #     sighting_to_destroy = gets.chomp.to_i
+    #     byebye = self.where(id: sighting_to_destroy)
+    #     byebye.destroy
     # end
+
 end

@@ -61,6 +61,9 @@ class CommandLineInterface
             bird.common_name
         end
         puts bird_name_array
+        if bird_name_array == []
+            puts "There are no birds to see! Sad! So many egrets!!"
+        end
         puts "\n"
         puts " ============================== "
         prompt.select ("Back to the main menu") do |menu|
@@ -80,9 +83,20 @@ class CommandLineInterface
             sleep 2
             self.main_menu
         else
+<<<<<<< HEAD
             p birdwatcher_sightings
         end
     end
+=======
+        puts "\n"
+        puts " ============================== "
+        prompt.select ("Back to the main menu") do |menu|
+            menu.choice "Main Menu", -> { self.main_menu }
+        end
+    end
+      
+end
+>>>>>>> 0f63cda455bbffd8986a179ea6d4181e34ffa786
 
     def update_name
         puts "New identity? Put it here!"
@@ -92,13 +106,25 @@ class CommandLineInterface
     end
 
     def delete_sighting
-        puts "What do you want to delete?"
-        p see_my_sightings
-        puts "Pick a sighting's number to delete"
+        all_sightings = self.birdwatcher.sightings.each do |sighting|
+            puts sighting.nice_description
+            end
+            if all_sightings == []
+                puts "No sightings to delete!"
+                sleep 1
+                self.main_menu
+            else
+        puts "Pick the sighting number that you would like to delete"
         sighting_to_destroy = gets.chomp.to_i
         byebye = Sighting.find(sighting_to_destroy)
         byebye.destroy
-        self.main_menu
+        puts "\n"
+        puts " ============================== "
+        prompt.select ("Back to the main menu") do |menu|
+            menu.choice "Main Menu", -> { self.main_menu }
+        end
+    end
+
     end
 
     def goodbye
