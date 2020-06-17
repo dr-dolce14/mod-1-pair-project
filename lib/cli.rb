@@ -73,7 +73,7 @@ class CommandLineInterface
         puts bird_name_array
         puts "\n"
         puts " ============================== "
-        prompt.select ("Would you like to go back to the main menu?") do |menu|
+        prompt.select ("Back to the main menu") do |menu|
             menu.choice "Main Menu", -> { self.main_menu }
 
         end
@@ -93,11 +93,7 @@ class CommandLineInterface
         else
         print birdwatcher_sightings
     end
-    puts "\n"
-    puts " ============================== "
-    prompt.select ("Would you like to go back to the main menu?") do |menu|
-        menu.choice "Main Menu", -> { self.main_menu }
-    end
+   
 end
 
     def update_name
@@ -125,5 +121,9 @@ end
 end
 
 
-
+# puts "\n"
+# puts " ============================== "
+# prompt.select ("Would you like to Go back to the main menu") do |menu|
+#     menu.choice "Main Menu", -> { self.main_menu }
+# end
   
