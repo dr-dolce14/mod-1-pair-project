@@ -26,6 +26,7 @@ class CommandLineInterface
           menu.choice "Report a sighting", -> { self.report_sighting }
           menu.choice "See my sightings", -> { self.see_my_sightings }
           menu.choice "See my birds", -> { self.see_my_birds }
+          menu.choice "What birds are out in today's weather?", -> { self.weather_choice }
           menu.choice "Update name", -> { self.update_name }
           menu.choice "Delete a sighting", -> { self.delete_sighting }
     
@@ -79,10 +80,9 @@ class CommandLineInterface
             sleep 2
             self.main_menu
         else
-        p birdwatcher_sightings
+            p birdwatcher_sightings
+        end
     end
-   
-end
 
     def update_name
         puts "New identity? Put it here!"
